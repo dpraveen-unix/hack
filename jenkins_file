@@ -6,8 +6,8 @@ node {
       }     
       stage('Build image') {         
        
-            app = docker.build("pravamsi/team2:june3")    
-       }     
+sh "docker build ."
+}     
       stage('Test image') {           
             app.inside {            
              
