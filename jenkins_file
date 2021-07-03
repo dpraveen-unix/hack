@@ -1,0 +1,22 @@
+node {    
+      def app     
+      stage('Get repo') {               
+             
+            checkout scm    
+      }     
+      stage('Build image') {         
+       
+            app = docker.build("pravamsi/team2:june3")    
+       }     
+      stage('Test image') {           
+            app.inside {            
+             
+             sh 'echo "Image is successful"'        
+            }    
+        }     
+       stage('Push image') {
+       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {                        
+       app.push("latest")        
+              }    
+           }
+        }
