@@ -5,19 +5,20 @@ node {
             checkout scm    
       }     
       stage('Build image') {         
-       
-sh "docker build ."
+      app = docker.build("pravamsi/test:jul21")       
 }     
       stage('Test image') {           
             app.inside {            
              
-             sh 'echo "Image is successful"'        
+             echo "Image is successful"        
             }    
         }     
        stage('Push image') {
-       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {    
-       def customImage = docker.build("pravamsi/centos")
+       docker.withRegistry('https://registry.hub.docker.com', 'repo-public') {    
+       # def customImage = docker.build("pravamsi/centos")
        app.push("latest")        
               }    
+              echo "pushing Image"
            }
         }
+        
